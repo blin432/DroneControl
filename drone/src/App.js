@@ -8,6 +8,7 @@ import JoyWrapper from './Joystick.js'
 import ReactNipple from 'react-nipple';
 import FlightData from './FlightData.jsx'
 import MainSection from './MainSection.jsx'
+import Elevation from './Elevation.jsx'
 import './App.css';
 
 
@@ -23,8 +24,8 @@ class App extends Component {
       xDirection:"",
       yDirection:"",
       angle:"",
-      elevationPositive:0,
-      elevationNegative:0
+      elevation:0
+      
     }
     
 }  
@@ -41,16 +42,19 @@ componentWillUnmount() {
 action({keyCode}){
   switch( keyCode ) {
       case 32:
-          
-          this.setState({onlineStatus:"green"}) 
+          if(this.state.onlineStatus!=="green"){
+            this.setState({onlineStatus:"green"}) 
+          }else {
+            this.setState({onlineStatus:"red"}) 
+          }
           break;
       case 87:
-          let  newPositveElevation = this.state.elevationPositive +1;
-          this.setState({elevationPositive:newPositveElevation})  
+          let  newElevation = this.state.elevation +1;
+          this.setState({elevation:newElevation})  
           break;
       case 83:
-          let  newNegativeElevation = this.state.elevationPositive - 1;
-          this.setState({elevationNegative:newNegativeElevation})  
+          newElevation = this.state.elevation -1;
+          this.setState({elevation:newElevation})  
           break;
       default: 
           break;
@@ -65,9 +69,9 @@ action({keyCode}){
           <Col xs={{span:12,order:2}} sm={{span:12,order:2}}
           md={{span:3,order:1}} lg={{span:3,order:1}} >
           <FlightData {...this.state}/>
-            <Row className="d-flex align-content-end gif-image">
+            <Row className="d-flex align-content-end gif-image-container">
                   <img className="gif-image"
-                  style={{height:"100px", witdh:"100px"}}
+                  style={{height:"100px", witdh:"100px",marginBottom:`${this.state.elevation}%`}}
                   src="https://thumbs.gfycat.com/ImportantEthicalFantail-max-1mb.gif" 
                   ></img>
             </Row>
@@ -76,20 +80,7 @@ action({keyCode}){
           <Col  xs={{span:12,order:3}} sm={{span:12,order:3}} 
           md={{span:3,order:3}} lg={{span:3,order:3}}
           className="controller-wrapper">
-          <div className="elevation-wrapper">
-              <Row className="pt-4 d-flex justify-content-center" >
-                    <img alt="button"
-                    style={{height:"100px", witdh:"100px"}}
-                    src="https://www.shareicon.net/data/128x128/2016/11/09/851194_arrows_512x512.png" 
-                    onClick={(e) => this.props.move({keyCode:38})}></img>
-                </Row>
-                <Row className="d-flex justify-content-center">
-                  <img alt="button" 
-                  style={{height:"100px", witdh:"100px"}} 
-                  src="https://www.shareicon.net/data/128x128/2016/11/09/851184_multimedia_512x512.png" 
-                  ></img>
-                </Row>
-            </div>
+          <Elevation  action={this.action.bind(this)}/>
             <Row className="nippleContainer" >
               <Col className="nipple" style={{height:"250px", backgroundColor:"grey"}} >
               <ReactNipple

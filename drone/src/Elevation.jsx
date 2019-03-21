@@ -28,18 +28,18 @@ class Elevation extends Component {
     
     return (
       
-          <div className="elevation-wrapper">
-              <Row className="pt-4 d-flex justify-content-center" >
+          <div className="elevation-wrapper mobile">
+              <Row className="pt-4 d-flex justify-content-center mb-4" >
                     <img alt="button"
                     style={{height:"100px", witdh:"100px"}}
                     src="https://www.shareicon.net/data/128x128/2016/11/09/851194_arrows_512x512.png" 
-                    onClick={(e) => this.props.move({keyCode:38})}></img>
+                    onClick={(e) => this.props.action({keyCode:87})}></img>
                 </Row>
                 <Row className="d-flex justify-content-center">
                   <img alt="button" 
                   style={{height:"100px", witdh:"100px"}} 
                   src="https://www.shareicon.net/data/128x128/2016/11/09/851184_multimedia_512x512.png" 
-                  ></img>
+                  onClick={(e) => this.props.action({keyCode:83})}></img>
                 </Row>
             </div>
             
